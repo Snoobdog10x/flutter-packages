@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 
 import '../google_fonts.dart';
 import 'file_io.dart' // Stubbed implementation by default.
-    // Concrete implementation if File IO is available.
+// Concrete implementation if File IO is available.
     if (dart.library.io) 'file_io_desktop_and_mobile.dart' as file_io;
 import 'google_fonts_descriptor.dart';
 import 'google_fonts_family_with_variant.dart';
@@ -102,7 +102,9 @@ TextStyle googleFontsTextStyle({
 
   final loadingFuture = loadFontIfNecessary(descriptor);
   pendingFontFutures.add(loadingFuture);
-  loadingFuture.then((_) => pendingFontFutures.remove(loadingFuture));
+  loadingFuture
+      .then((_) => pendingFontFutures.remove(loadingFuture), onError: (_) {})
+      .catchError((_) {});
 
   return textStyle.copyWith(
     fontFamily: familyWithVariant.toString(),
