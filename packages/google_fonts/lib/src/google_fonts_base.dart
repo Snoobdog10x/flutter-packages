@@ -104,7 +104,9 @@ TextStyle googleFontsTextStyle({
   pendingFontFutures.add(loadingFuture);
   loadingFuture
       .then((_) => pendingFontFutures.remove(loadingFuture), onError: (_) {})
-      .catchError((_) {});
+      .catchError((_) {
+    return true;
+  });
 
   return textStyle.copyWith(
     fontFamily: familyWithVariant.toString(),
